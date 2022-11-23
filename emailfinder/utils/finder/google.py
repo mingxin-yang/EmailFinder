@@ -29,6 +29,7 @@ def search(target, proxies=None, total=200):
 						)
 			text = response.text
 			if response.status_code == 302:
+				print_info("use ScraperApi")
 				response = requests.post(url='https://async.scraperapi.com/jobs',
 										 json={'apiKey': '', 'url': url})
 				if response.status_code == 200:
