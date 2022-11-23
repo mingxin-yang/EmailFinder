@@ -40,7 +40,7 @@ def search(target, proxies=None, total=200):
 
 					text = text['response']['body']
 				else:
-					raise 'scraperapi status code: {}'.format(response.status_code)
+					raise ValueError('scraperapi status code: {}'.format(response.status_code))
 			if "detected unusual traffic" in text:
 				raise GoogleCaptcha()
 			emails = emails.union(get_emails(target, text))
