@@ -30,15 +30,10 @@ def search(target, proxies=None, total=200):
 			text = response.text
 			if response.status_code == 302:
 				print_info("use ScraperApi")
-				response = requests.post(url='https://async.scraperapi.com/jobs',
-										 json={'apiKey': '', 'url': url})
+				payload = {'api_key': '', 'url': url}
+				response = requests.get('http://api.scraperapi.com', params=payload)
 				if response.status_code == 200:
-					text = json.loads(response.text)
-					while text['status'] != 'finished':
-						response = requests.get(url=text['statusUrl'])
-						text = json.loads(response.text)
-
-					text = text['response']['body']
+					text = response.text
 				else:
 					raise ValueError('scraperapi status code: {}'.format(response.status_code))
 			if "detected unusual traffic" in text:
