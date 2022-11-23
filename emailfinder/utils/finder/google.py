@@ -8,7 +8,7 @@ from emailfinder.utils.color_print import print_info, print_ok
 import json
 
 
-def search(target, proxies=None, total=200):
+def search(target, proxies=None, total=50):
 	emails = set()
 	start = 0
 	num = 50 if total > 50 else total
@@ -31,7 +31,7 @@ def search(target, proxies=None, total=200):
 			if response.status_code == 302:
 				print_info("use ScraperApi")
 				payload = {'api_key': '', 'url': url}
-				response = requests.get('http://api.scraperapi.com', params=payload)
+				response = requests.get('http://api.scraperapi.com', params=payload, timeout=10000)
 				if response.status_code == 200:
 					text = response.text
 				else:
