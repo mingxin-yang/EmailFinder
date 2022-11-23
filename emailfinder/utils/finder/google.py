@@ -5,6 +5,7 @@ from emailfinder.utils.exception import GoogleCaptcha, GoogleCookiePolicies
 from emailfinder.utils.agent import user_agent
 from emailfinder.utils.file.email_parser import get_emails
 from emailfinder.utils.color_print import print_info, print_ok
+import json
 
 
 def search(target, proxies=None, total=200):
@@ -19,14 +20,25 @@ def search(target, proxies=None, total=200):
 	while start < iterations:
 		try:
 			url = url_base + f"&start={start}"
-			response = requests.get(url,
-				headers=user_agent.get(randint(0, len(user_agent)-1)),
-				allow_redirects=False,
-				cookies=cookies,
-				verify=False,
-				proxies=proxies
-			)
-			text = response.text
+			response = requests.post(url='https://async.scraperapi.com/jobs',
+									 json={'apiKey': '', 'url': url})
+			if response.status_code == 200:
+				text = json.loads(response.text)
+				while text['status'] != 'finished':
+					response = requests.get(url=text['statusUrl'])
+					text = json.loads(response.text)
+
+				text = text['response']['body']
+			else:
+				print('scraperapi status code: {}'.format(response.status_code))
+				response = requests.get(url,
+										headers=user_agent.get(randint(0, len(user_agent) - 1)),
+										allow_redirects=False,
+										cookies=cookies,
+										verify=False,
+										proxies=proxies
+										)
+				text = response.text
 			if response.status_code == 302 and ("htps://www.google.com/webhp" in text or "https://consent.google.com" in text):
 				raise GoogleCookiePolicies()
 			elif "detected unusual traffic" in text:
