@@ -29,3 +29,12 @@ class YandexDetection(Exception):
             self.data = args[0]
     def  __str__(self):
         return "YandexDetection, {0}".format(self.data)
+
+class GoogleCustomSearchException(Exception):
+    def __init__(self, *args):
+        self.data = "not 200"
+        if args:
+            self.data = args[0]
+
+    def __str__(self):
+        return "GoogleCustomSearchException, {0}".format(self.data)

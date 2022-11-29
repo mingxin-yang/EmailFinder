@@ -2,6 +2,7 @@ from emailfinder.utils.finder import google
 from emailfinder.utils.finder import bing
 from emailfinder.utils.finder import baidu
 from emailfinder.utils.finder import yandex
+from emailfinder.utils.finder import google_custom_search
 from emailfinder.utils.color_print import print_error, print_ok
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -10,7 +11,8 @@ SEARCH_ENGINES_METHODS = {
         "google": google.search,
         "bing": bing.search,
         "baidu": baidu.search,
-        "yandex": yandex.search
+        "yandex": yandex.search,
+        "google_custom_search": google_custom_search.search
 }
 
 
