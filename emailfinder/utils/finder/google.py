@@ -6,6 +6,7 @@ from emailfinder.utils.agent import user_agent
 from emailfinder.utils.file.email_parser import get_emails
 from emailfinder.utils.color_print import print_info, print_ok
 import json
+from RecaptchaResolver.solution import Solution
 
 
 def search(target, proxies=None, total=50):
@@ -17,6 +18,40 @@ def search(target, proxies=None, total=50):
         iterations += 1
     url_base = f"https://www.google.com/search?q=intext:@{target}&num={num}"
     cookies = {"CONSENT": "YES+srp.gws"}
+
+    with open('ip.text', 'r') as f:
+        local_ips = f.read()
+
+    if local_ips:
+        ips = local_ips.split(',')
+    else:
+        ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
+                           "=&protocol=http").text.split("\r\n")
+        with open("ip.txt", "w") as f:
+            f.write("\r\n".join(ips))
+
+    ip_check_url = 'http://icanhazip.com/'
+    ip_can_use = ''
+    for ip in ips:
+        try:
+            response = requests.get(ip_check_url, proxies={'http': ip, 'https': ip}, timeout=5)
+            if response.text.strip() == ip.split(':')[0]:
+                print_ok(f"当前代理IP：{ip}")
+                ip_can_use = ip
+                break
+        except Exception as e:
+            print(e)
+            continue
+
+    if not ip_can_use:
+        ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
+                           "=&protocol=http").text.split("\r\n")
+        ip_can_use = ips[0]
+        with open("ip.txt", "w") as f:
+            f.write("\r\n".join(ips))
+
+    proxies = {'http': ip_can_use, 'https': ip_can_use}
+
     while start < iterations:
         try:
             url = url_base + f"&start={start}"
