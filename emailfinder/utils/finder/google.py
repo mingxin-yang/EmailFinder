@@ -34,7 +34,7 @@ def search(target, proxies=None, total=50):
         try:
             response = requests.get(ip_check_url, proxies={'http': "http://" + ip}, timeout=5)
             print_info(f"IP: {ip} - {response.text.strip()}")
-            if response.text.strip() == ip.split(':')[0]:
+            if response.status_code == 200:
                 print_ok(f"当前代理IP：{ip}")
                 ip_can_use = ip
                 break
