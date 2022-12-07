@@ -24,9 +24,11 @@ def search(target, proxies=None, total=50):
 
     if local_ips:
         ips = local_ips.split(',')
+        print_ok(f"Using {len(ips)} local IPs")
     else:
         ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
                            "=&protocol=http").text.split("\r\n")
+        print_info(f"Got {len(ips)} IPs from API")
         with open("ip.txt", "w") as f:
             f.write("\r\n".join(ips))
 
