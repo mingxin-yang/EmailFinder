@@ -5,9 +5,6 @@ from emailfinder.utils.exception import GoogleCaptcha, GoogleCookiePolicies
 from emailfinder.utils.agent import user_agent
 from emailfinder.utils.file.email_parser import get_emails
 from emailfinder.utils.color_print import print_info, print_ok
-import json
-from RecaptchaResolver.solution import Solution
-
 
 def search(target, proxies=None, total=50):
     emails = set()
