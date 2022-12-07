@@ -17,9 +17,9 @@ def search(target, proxies=None, total=50):
     cookies = {"CONSENT": "YES+srp.gws"}
 
     try:
-        with open('ip.text', 'r') as f:
+        with open('ip.txt', 'r') as f:
             local_ips = f.read()
-        ips = local_ips.split(',')
+        ips = local_ips.split('\n')
         print_ok(f"Using {len(ips)} local IPs")
     except FileNotFoundError:
         ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
@@ -32,7 +32,8 @@ def search(target, proxies=None, total=50):
     ip_can_use = ''
     for ip in ips:
         try:
-            response = requests.get(ip_check_url, proxies={'http': ip, 'https': ip}, timeout=5)
+            response = requests.get(ip_check_url, proxies={'http': "http://" + ip , 'https': "http://" + ip}, timeout=5)
+            print_info(f"IP: {ip} - {response.text.strip()}")
             if response.text.strip() == ip.split(':')[0]:
                 print_ok(f"当前代理IP：{ip}")
                 ip_can_use = ip
