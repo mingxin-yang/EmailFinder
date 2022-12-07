@@ -5,6 +5,7 @@ from emailfinder.utils.exception import GoogleCaptcha, GoogleCookiePolicies
 from emailfinder.utils.agent import user_agent
 from emailfinder.utils.file.email_parser import get_emails
 from emailfinder.utils.color_print import print_info, print_ok
+import random
 
 def search(target, proxies=None, total=50):
     emails = set()
@@ -30,16 +31,17 @@ def search(target, proxies=None, total=50):
 
     ip_check_url = 'http://icanhazip.com/'
     ip_can_use = ''
-    for ip in ips:
+    for i in range(len(ips)):
+        random_ip = random.choice(ips)
         try:
-            response = requests.get(ip_check_url, proxies={'http': "http://" + ip}, timeout=5)
-            print_info(f"IP: {ip} - {response.text.strip()}")
+            response = requests.get(ip_check_url, proxies={'http': "http://" + random_ip}, timeout=5)
+            print_info(f"IP: {random_ip} - {response.text.strip()}")
             if response.status_code == 200:
-                print_ok(f"当前代理IP：{ip}")
-                ip_can_use = ip
+                print_ok(f"当前代理IP：{random_ip}")
+                ip_can_use = random_ip
                 break
         except Exception as e:
-            print(e)
+            print_info(e)
             continue
 
     if not ip_can_use:
