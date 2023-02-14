@@ -3,13 +3,14 @@ import argparse
 import requests
 from emailfinder.utils.agent import user_agent
 from random import randint
+from emailfinder.utils.env import GOOGLE_CUSTOM_SEARCH_KEY, GOOGLE_CUSTOM_SEARCH_CX
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from emailfinder.utils.color_print import print_info, print_ok
 
 def search(target):
     url_base = f'https://www.googleapis.com/customsearch/v1?' \
-               f'key=AIzaSyAt7DzWYqriL0pW94IJFaOVkcQtp61KQf8&cx=046d87ee726f14a27&q=site:linkedin.com/in/' \
+               f'key={GOOGLE_CUSTOM_SEARCH_KEY}cx={GOOGLE_CUSTOM_SEARCH_CX}&q=site:linkedin.com/in/' \
                f' AND "{target}"'
     url = url_base + f"&start={1}"
     try:

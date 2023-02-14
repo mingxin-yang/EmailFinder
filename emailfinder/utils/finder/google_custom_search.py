@@ -4,6 +4,7 @@ from emailfinder.utils.exception import GoogleCustomSearchException
 from emailfinder.utils.agent import user_agent
 from emailfinder.utils.file.email_parser import get_emails
 from emailfinder.utils.color_print import print_info, print_ok
+from emailfinder.utils.env import GOOGLE_CUSTOM_SEARCH_KEY, GOOGLE_CUSTOM_SEARCH_CX
 
 
 def search(target, proxies=None, total=50):
@@ -12,7 +13,7 @@ def search(target, proxies=None, total=50):
     max_num = 5
     # https://developers.google.com/custom-search/v1/using_rest
     url_base = f"https://www.googleapis.com/customsearch/v1?" \
-               f"key=AIzaSyAt7DzWYqriL0pW94IJFaOVkcQtp61KQf8&cx=046d87ee726f14a27&q={target}"
+               f"key={GOOGLE_CUSTOM_SEARCH_KEY}cx={GOOGLE_CUSTOM_SEARCH_CX}&q={target}"
     while start < max_num:
         try:
             url = url_base + f"&start={start * 10 + 1}"
