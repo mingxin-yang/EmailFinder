@@ -95,41 +95,41 @@ def search_with_google(target, proxies=None, total=10):
                f' AND "{target}"&num={num}'
     cookies = {"CONSENT": "YES+srp.gws"}
 
-    # try:
-    #     with open('ip.txt', 'r') as f:
-    #         local_ips = f.read()
-    #     ips = local_ips.split('\n')
-    #     print_ok(f"Using {len(ips)} local IPs")
-    # except FileNotFoundError:
-    #     ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
-    #                        "=&protocol=http").text.split("\r\n")
-    #     print_info(f"Got {len(ips)} IPs from API")
-    #     with open("ip.txt", "w") as f:
-    #         f.write("\r\n".join(ips))
-    #
-    # ip_check_url = 'http://icanhazip.com/'
-    # ip_can_use = ''
-    # for i in range(len(ips)):
-    #     random_ip = random.choice(ips)
-    #     try:
-    #         response = requests.get(ip_check_url, proxies={'http': "http://" + random_ip}, timeout=5)
-    #         print_info(f"IP: {random_ip} - {response.text.strip()}")
-    #         if response.status_code == 200:
-    #             print_ok(f"当前代理IP：{random_ip}")
-    #             ip_can_use = random_ip
-    #             break
-    #     except Exception as e:
-    #         print_info(e)
-    #         continue
-    #
-    # if not ip_can_use:
-    #     ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
-    #                        "=&protocol=http").text.split("\r\n")
-    #     ip_can_use = ips[0]
-    #     with open("ip.txt", "w") as f:
-    #         f.write("\r\n".join(ips))
-    #
-    # proxies = {'http': ip_can_use, 'https': ip_can_use}
+    try:
+        with open('ip.txt', 'r') as f:
+            local_ips = f.read()
+        ips = local_ips.split('\n')
+        print_ok(f"Using {len(ips)} local IPs")
+    except FileNotFoundError:
+        ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
+                           "=&protocol=http").text.split("\r\n")
+        print_info(f"Got {len(ips)} IPs from API")
+        with open("ip.txt", "w") as f:
+            f.write("\r\n".join(ips))
+
+    ip_check_url = 'http://icanhazip.com/'
+    ip_can_use = ''
+    for i in range(len(ips)):
+        random_ip = random.choice(ips)
+        try:
+            response = requests.get(ip_check_url, proxies={'http': "http://" + random_ip}, timeout=5)
+            print_info(f"IP: {random_ip} - {response.text.strip()}")
+            if response.status_code == 200:
+                print_ok(f"当前代理IP：{random_ip}")
+                ip_can_use = random_ip
+                break
+        except Exception as e:
+            print_info(e)
+            continue
+
+    if not ip_can_use:
+        ips = requests.get("http://api.proxy.ipidea.io/getProxyIp?num=100&return_type=txt&lb=1&sb=0&flow=1&regions"
+                           "=&protocol=http").text.split("\r\n")
+        ip_can_use = ips[0]
+        with open("ip.txt", "w") as f:
+            f.write("\r\n".join(ips))
+
+    proxies = {'http': ip_can_use, 'https': ip_can_use}
 
     while start < iterations:
         try:
@@ -139,6 +139,7 @@ def search_with_google(target, proxies=None, total=10):
                                     allow_redirects=False,
                                     cookies=cookies,
                                     verify=False,
+                                    proxies=proxies
                                     )
             text = response.text
             if response.status_code == 302:
