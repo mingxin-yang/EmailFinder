@@ -11,6 +11,7 @@ from emailfinder.utils.exception import GoogleCaptcha, GoogleCookiePolicies
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from parsel import Selector
 
+
 def search_with_google_custom(target):
     url_base = f'https://www.googleapis.com/customsearch/v1?' \
                f'key={GOOGLE_CUSTOM_SEARCH_KEY}&cx={GOOGLE_CUSTOM_SEARCH_CX}&q=site:linkedin.com/in/' \
@@ -158,7 +159,9 @@ def search_with_google(target, proxies=None, total=10):
         print_ok("Google discovered {} linkedin links".format(len(list(links_2))))
     else:
         print_info("Google did not discover any linkedin links")
-    return links_2
+
+    link_dict = {target: links_2[0]}
+    return link_dict
 
 
 if __name__ == '__main__':
