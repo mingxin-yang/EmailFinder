@@ -161,10 +161,7 @@ def search_with_google(target, proxies=None, total=10):
         print_info("Google did not discover any linkedin links")
 
     link_dict = {target: links_2[0] if len(links_2) > 0 else None}
-    link_list_dict = [].append(link_dict)
-    print("link_list_dict")
-    print(link_dict)
-    print(link_list_dict)
+    link_list_dict = [link_dict]
     return link_list_dict
 
 
