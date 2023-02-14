@@ -13,7 +13,7 @@ def search(target, proxies=None, total=50):
     max_num = 5
     # https://developers.google.com/custom-search/v1/using_rest
     url_base = f"https://www.googleapis.com/customsearch/v1?" \
-               f"key={GOOGLE_CUSTOM_SEARCH_KEY}cx={GOOGLE_CUSTOM_SEARCH_CX}&q={target}"
+               f"key={GOOGLE_CUSTOM_SEARCH_KEY}&cx={GOOGLE_CUSTOM_SEARCH_CX}&q={target}"
     while start < max_num:
         try:
             url = url_base + f"&start={start * 10 + 1}"

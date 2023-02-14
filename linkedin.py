@@ -10,7 +10,7 @@ from emailfinder.utils.color_print import print_info, print_ok
 
 def search(target):
     url_base = f'https://www.googleapis.com/customsearch/v1?' \
-               f'key={GOOGLE_CUSTOM_SEARCH_KEY}cx={GOOGLE_CUSTOM_SEARCH_CX}&q=site:linkedin.com/in/' \
+               f'key={GOOGLE_CUSTOM_SEARCH_KEY}&cx={GOOGLE_CUSTOM_SEARCH_CX}&q=site:linkedin.com/in/' \
                f' AND "{target}"'
     url = url_base + f"&start={1}"
     try:
