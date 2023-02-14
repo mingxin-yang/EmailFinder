@@ -50,8 +50,6 @@ def get_links(text):
     soup = BeautifulSoup(text, 'lxml')
     result_div = soup.find_all('div', attrs={'class': 'g'})
 
-    print(result_div)
-
     for r in result_div:
         # Checks if each element is present, else, raise exception
         try:
@@ -165,15 +163,15 @@ def search_with_google(target, proxies=None, total=10):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--name', help="Name to search", required=True)
+    parser.add_argument('-n', '--nargs', nargs='+', help="Name to search", required=True)
 
     args = parser.parse_args()
 
     links = set()
-    threads = 2
+    threads = 3
 
     with ThreadPoolExecutor(max_workers=threads) as executor:
-        future_links = {executor.submit(search_with_google, args.name)}
+        future_links = {executor.submit(search_with_google, name) for name in args.nargs}
         for future in as_completed(future_links):
             try:
                 data = future.result()
