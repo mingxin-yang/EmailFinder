@@ -71,7 +71,7 @@ def get_links(text):
 
             # Check to make sure everything is present before appending
             if link_1 != '' and title != '' and description != '':
-                links_1.append(link['href'])
+                links_1.append(link_1['href'])
                 titles.append(title)
                 descriptions.append(description)
 
