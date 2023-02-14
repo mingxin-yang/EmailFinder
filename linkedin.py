@@ -47,8 +47,11 @@ def get_links(text):
     links_1 = []
     titles = []
     descriptions = []
-    with open('google.html', 'w') as f:
-        f.write(text)
+    try:
+        with open('google.html', 'w') as f:
+            f.write(text)
+    except Exception as e:
+        print(e)
     soup = BeautifulSoup(text, 'lxml')
     result_div = soup.find_all('div', attrs={'class': 'g'})
 
