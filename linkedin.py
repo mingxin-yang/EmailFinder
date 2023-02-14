@@ -91,7 +91,8 @@ def search_with_google(target, proxies=None, total=50):
     iterations = int(total / num)
     if (total % num) != 0:
         iterations += 1
-    url_base = f"https://www.google.com/search?q=intext:@{target}&num={num}"
+    url_base = f'https://www.google.com/search?q=intext:site:linkedin.com/in/' \
+               f' AND "{target}"&num={num}'
     cookies = {"CONSENT": "YES+srp.gws"}
 
     try:
