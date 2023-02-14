@@ -171,7 +171,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    links = set()
+    links = []
     threads = 3
 
     with ThreadPoolExecutor(max_workers=threads) as executor:
@@ -180,13 +180,9 @@ if __name__ == '__main__':
             try:
                 data = future.result()
                 if data:
-                    print("data")
-                    print(data)
-                    links = links.union(data)
+                    links.append(data)
             except Exception as exc:
                 print_error(f"Error: {exc}")
-    print("linkss")
-    print(links)
     total_links = len(links)
     links_msg = f"\nTotal links: {total_links}"
     print(links_msg)
