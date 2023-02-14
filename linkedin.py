@@ -135,7 +135,7 @@ def search_with_google(target, proxies=None, total=10):
         try:
             url = url_base + f"&start={start}"
             response = requests.get(url,
-                                    headers=user_agent.get(randint(0, len(user_agent) - 1)),
+                                    headers=user_agent.get(0),
                                     allow_redirects=False,
                                     cookies=cookies,
                                     verify=False,
