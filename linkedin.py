@@ -50,7 +50,7 @@ def get_links(text):
     soup = BeautifulSoup(text, 'html.parser')
     result_div = soup.find_all('div', attrs={'class': 'g'})
 
-    # print(result_div)
+    print(result_div)
 
     for r in result_div:
         # Checks if each element is present, else, raise exception
@@ -146,7 +146,6 @@ def search_with_google(target, proxies=None, total=10):
                 raise GoogleCookiePolicies()
             if "detected unusual traffic" in text:
                 raise GoogleCaptcha()
-            print(text)
             links_2 = links_2.union(get_links(text))
 
             soup = BeautifulSoup(text, "html.parser")
