@@ -47,11 +47,6 @@ def get_links(text):
     links_1 = []
     titles = []
     descriptions = []
-    try:
-        with open('google.html', 'w') as f:
-            f.write(text)
-    except Exception as e:
-        print(e)
     soup = BeautifulSoup(text, 'lxml')
     result_div = soup.find_all('div', attrs={'class': 'g'})
 
@@ -96,7 +91,7 @@ def search_with_google(target, proxies=None, total=10):
     iterations = int(total / num)
     if (total % num) != 0:
         iterations += 1
-    url_base = f'https://www.google.com/search?q=intext:site:linkedin.com/in/' \
+    url_base = f'https://www.google.com/search?q=site:linkedin.com/in/' \
                f' AND "{target}"&num={num}'
     cookies = {"CONSENT": "YES+srp.gws"}
 
