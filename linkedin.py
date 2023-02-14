@@ -84,7 +84,7 @@ def get_links(text):
     return links_1
 
 
-def search_with_google(target, proxies=None, total=50):
+def search_with_google(target, proxies=None, total=10):
     links_2 = set()
     start = 0
     num = 50 if total > 50 else total
@@ -146,6 +146,7 @@ def search_with_google(target, proxies=None, total=50):
                 raise GoogleCookiePolicies()
             if "detected unusual traffic" in text:
                 raise GoogleCaptcha()
+            print(text)
             links_2 = links_2.union(get_links(text))
 
             soup = BeautifulSoup(text, "html.parser")
