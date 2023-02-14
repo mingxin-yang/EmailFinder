@@ -161,7 +161,10 @@ def search_with_google(target, proxies=None, total=10):
         print_info("Google did not discover any linkedin links")
 
     link_dict = {target: links_2[0] if len(links_2) > 0 else None}
-    return [].append(link_dict)
+    link_list_dict = [].append(link_dict)
+    print("link_list_dict")
+    print(link_list_dict)
+    return link_list_dict
 
 
 if __name__ == '__main__':
@@ -179,16 +182,20 @@ if __name__ == '__main__':
             try:
                 data = future.result()
                 if data:
+                    print("data")
+                    print(data)
                     links = links.union(data)
             except Exception as exc:
                 print_error(f"Error: {exc}")
-
+    print("linkss")
+    print(links)
     total_links = len(links)
     links_msg = f"\nTotal links: {total_links}"
     print(links_msg)
     print("-" * len(links_msg))
     if total_links > 0:
         for link in links:
+
             print(link)
     else:
         print("0 links :(. Closing...")
